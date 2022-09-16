@@ -17,12 +17,12 @@ loadMoreBtnEl.classList.add('is-hidden');
 const onLoadMoreBtnElClick = async event => {
     try {
       unsplashApi.page += 1;
-  
+
       const { data } = await unsplashApi.fetchPhotosByQuery();
-  
+      console.log(data);
       galleryListEl.insertAdjacentHTML('beforeend', galleryTemplate(data.hits));
       lightbox.refresh();
-      if (data.total === unsplashApi.page) {
+      if (data.hits.length === 0) {
         loadMoreBtnEl.classList.add('is-hidden');
         loadMoreBtnEl.removeEventListener('click', onLoadMoreBtnElClick);
         Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
@@ -41,22 +41,26 @@ const onSearhFormElSubmit = async event => {
     try {
         const { data } = await unsplashApi.fetchPhotosByQuery();
         console.log(data);
-        if (data.total === 0) {
+        if (data.totalHits === 0) {
           galleryListEl.innerHTML = '';
           Notiflix.Notify.info("Sorry, there are no images matching your search query. Please try again.");
           return;
         }
+
             
             galleryListEl.innerHTML = galleryTemplate(data.hits);
             lightbox.refresh();
-            loadMoreBtnEl.classList.remove('is-hidden');
+            if (data.totalHits < 40) {
+                loadMoreBtnEl.classList.add('is-hidden');
+              } else {
+                loadMoreBtnEl.classList.remove('is-hidden');
+              }
             loadMoreBtnEl.addEventListener('click', onLoadMoreBtnElClick);
             Notiflix.Notify.info(`Hooray! We found ${data.totalHits} images.`);
 
       } catch (err) {
         console.log(err);
       }
-
     };
 
 searchFormEl.addEventListener('submit', onSearhFormElSubmit);
