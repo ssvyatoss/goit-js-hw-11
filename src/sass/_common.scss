@@ -1,1 +1,46 @@
 @import '~node_modules/modern-normalize/modern-normalize.css';
+
+.is-hidden {
+    display: none;
+}
+
+.wrapper {
+    display: flex;
+    background-color: aqua;
+    justify-content: center;
+    height: 50px;
+}
+
+.search-form {
+    align-self: center;
+}
+
+.load-more {
+    align-content: center;
+}
+
+.button-wrapper {
+    display: flex;
+    justify-content: center;
+}
+
+.gallery {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    text-decoration: none;
+}
+
+.info {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.info-item.b:hover
+.info-item.b:focus {
+    text-decoration: none;
+}
+
+
+
